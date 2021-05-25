@@ -1,5 +1,5 @@
 $(() => {
-    let url = "http://127.0.0.1:2777";
+    let url = "https://halaphone.herokuapp.com";
     let listAll = () => {
         $.get(url + "/listAll", (data) => {
 
@@ -9,7 +9,7 @@ $(() => {
             $(data).each((i, element) => {
                 (element.name === "Hanan") ?
 
-                $('#hanan-tb').append(`
+                $('#hanan-tb').prepend(`
                 <tr>
                             <td>
                                 ${element.enterTime}
@@ -21,7 +21,7 @@ $(() => {
                                 ${element.date}
                             </td>
                 </tr>`):
-                    $('#ayat-tb').append(`
+                    $('#ayat-tb').prepend(`
                 <tr>
                             <td>
                                 ${element.enterTime}
