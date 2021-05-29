@@ -113,7 +113,9 @@ $(() => {
         var pin = $('#code-input').val()
         if (validate(pin)) {
             $("#clearModal").modal("hide");
-            await $.post(url + "/clearAll").then(() => {
+            await $.post(url + "/clearAll", data => {
+
+            }).then(() => {
                 listAll
                 $('#code-input').val("")
             })
