@@ -116,7 +116,7 @@ $(() => {
             await $.post(url + "/clearAll", data => {
 
             }).then(() => {
-                listAll
+                listAll()
                 $('#code-input').val("")
             })
 
