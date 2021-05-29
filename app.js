@@ -38,7 +38,7 @@ async function main() {
                         .find({})
                         .toArray()
                         .then(function(feedbacks) {
-                            console.log(feedbacks)
+
                             res.status(200).json(feedbacks);
                         });
                 } catch (error) {
@@ -48,24 +48,11 @@ async function main() {
 
             //Post Hanan's Enterance
             app.post("/hananEnter", (req, res) => {
+
                 try {
-                    let today = new Date();
-                    let time = today.getHours() + " : " + today.getMinutes()
-                    let date =
-                        today.getFullYear() +
-                        "-" +
-                        (today.getMonth() + 1) +
-                        "-" +
-                        today.getDate()
-                    let enter = {
-                        name: "Hanan",
-                        enterTime: time,
-                        exitTime: "",
-                        date: date
-                    }
-                    hpCollection.insertOne(enter, (err, result) => {
+                    hpCollection.insertOne(req.body, (err, result) => {
                         if (err) console.log(err);
-                        console.log();
+                        console.log("hello")
                         res.status(200).json(req.body)
                     })
 
@@ -77,14 +64,7 @@ async function main() {
             //Post Hanan's Exit
             app.post("/hananExit", async(req, res) => {
                 try {
-                    let today = new Date();
-                    let time = today.getHours() + " : " + today.getMinutes()
-
-                    let exit = {
-                        name: "Hanan",
-                        exitTime: time,
-                    }
-                    await hpCollection.findOneAndUpdate({ name: "Hanan" }, { $set: exit }, { upsert: 1, sort: { _id: -1 } }, (err, result) => {
+                    await hpCollection.findOneAndUpdate({ name: "Hanan" }, { $set: req.body }, { upsert: 1, sort: { _id: -1 } }, (err, result) => {
                         if (err) console.log(err);
                         console.log(result);
                         res.status(200).json(req.body)
@@ -96,25 +76,12 @@ async function main() {
             })
 
             //Post Ayat's Enterance
-            app.post("/AyatEnter", (req, res) => {
+            app.post("/ayatEnter", (req, res) => {
+
                 try {
-                    let today = new Date();
-                    let time = today.getHours() + " : " + today.getMinutes()
-                    let date =
-                        today.getFullYear() +
-                        "-" +
-                        (today.getMonth() + 1) +
-                        "-" +
-                        today.getDate()
-                    let enter = {
-                        name: "Ayat",
-                        enterTime: time,
-                        exitTime: "",
-                        date: date
-                    }
-                    hpCollection.insertOne(enter, (err, result) => {
+                    hpCollection.insertOne(req.body, (err, result) => {
                         if (err) console.log(err);
-                        console.log();
+                        console.log("ayat enter result");
                         res.status(200).json(req.body)
                     })
 
@@ -126,14 +93,7 @@ async function main() {
             //Post Ayat's Exit
             app.post("/ayatExit", async(req, res) => {
                 try {
-                    let today = new Date();
-                    let time = today.getHours() + " : " + today.getMinutes()
-
-                    let exit = {
-                        name: "Ayat",
-                        exitTime: time,
-                    }
-                    await hpCollection.findOneAndUpdate({ name: "Ayat" }, { $set: exit }, { upsert: 1, sort: { _id: -1 } }, (err, result) => {
+                    await hpCollection.findOneAndUpdate({ name: "Ayat" }, { $set: req.body }, { upsert: 1, sort: { _id: -1 } }, (err, result) => {
                         if (err) console.log(err);
                         console.log(result);
                         res.status(200).json(req.body)
@@ -142,6 +102,23 @@ async function main() {
                 } catch (error) {
                     throw "error entering Ayat"
                 }
+            })
+
+            //Clear All Data
+            app.post("/clearAll", (req, res) => {
+
+                hpCollection.drop((err, result) => {
+                    if (err) throw (err)
+                    if (result) {
+                        res.sendStatus(200)
+                        res.status(200)
+                    } else {
+                        res.send(404)
+                    }
+
+
+                })
+
             })
 
         });

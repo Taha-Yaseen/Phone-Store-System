@@ -1,5 +1,6 @@
 $(() => {
-    let url = "https://halaphone.herokuapp.com";
+    let url = "http://127.0.0.1:2777"
+        //"https://halaphone.herokuapp.com";
     let listAll = () => {
         $.get(url + "/listAll", (data) => {
 
@@ -41,30 +42,89 @@ $(() => {
 
 
     $("#hananEnter").on("click", () => {
-        $.post(url + "/hananEnter", (data) => {
-            console.log(data)
-        }).then(listAll);
+        let today = new Date();
+        let time = today.getHours() +
+            ":" +
+            today.getMinutes();
+
+        let date =
+            today.getFullYear() +
+            "-" +
+            (today.getMonth() + 1) +
+            "-" +
+            today.getDate()
+
+        let enterData = {
+            name: "Hanan",
+            enterTime: time,
+            exitTime: "",
+            date: date
+        }
+        $.post(url + "/hananEnter", enterData).then(listAll);
     });
 
 
     $("#hananExit").on("click", () => {
-        $.post(url + "/hananExit", (data) => {
-            console.log(data)
-        }).then(listAll);
+        let today = new Date();
+        let time = today.getHours() + ":" + today.getMinutes()
+        let exitData = {
+            exitTime: time,
+        }
+        $.post(url + "/hananExit", exitData).then(listAll);
     });
 
 
     $("#ayatEnter").on("click", () => {
-        $.post(url + "/ayatEnter", (data) => {
-            console.log(data)
-        }).then(listAll);
+        let today = new Date();
+        let time = today.getHours() +
+            ":" +
+            today.getMinutes();
+
+        let date =
+            today.getFullYear() +
+            "-" +
+            (today.getMonth() + 1) +
+            "-" +
+            today.getDate()
+
+        let enterData = {
+            name: "Ayat",
+            enterTime: time,
+            exitTime: "",
+            date: date
+        }
+        $.post(url + "/ayatEnter", enterData).then(listAll);
     });
 
 
     $("#ayatExit").on("click", () => {
-        $.post(url + "/ayatExit", (data) => {
-            console.log(data)
-        }).then(listAll);
+        let today = new Date();
+        let time = today.getHours() + ":" + today.getMinutes()
+        let exitData = {
+            exitTime: time,
+        }
+        $.post(url + "/ayatExit",
+            exitData).then(listAll);
     });
+    let validate = (pin) => {
+        return pin === '1397'
+    }
+    $("#clear").on("click", async() => {
+        var pin = $('#code-input').val()
+        if (validate(pin)) {
+            $("#clearModal").modal("hide");
+            await $.post(url + "/clearAll").then(() => {
+                listAll
+                $('#code-input').val("")
+            })
+
+        } else {
+            $('#code-input').val("")
+            alert("Wrong code!")
+
+        }
+    });
+
+
     listAll();
 });
