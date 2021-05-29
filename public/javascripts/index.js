@@ -1,6 +1,7 @@
 $(() => {
-    let url = "http://127.0.0.1:2777"
-        //"https://halaphone.herokuapp.com";
+    let url =
+        "https://halaphone.herokuapp.com"
+        //"http://127.0.0.1:2777"
     let listAll = () => {
         $.get(url + "/listAll", (data) => {
 
