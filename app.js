@@ -122,6 +122,10 @@ async function main() {
             })
 
         });
+
+        app.post("/payment", (req, res) => {
+            res.send(200).json({ msg: "Payment successful for " + req.body.payment })
+        })
     } catch (e) {
         console.error(e);
     } finally {

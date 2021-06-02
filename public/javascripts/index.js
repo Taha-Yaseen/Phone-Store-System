@@ -128,6 +128,12 @@ $(() => {
         }
     });
 
-
+    let loading = new ldBar(".loading", {
+        "stroke": '#f00',
+        "stroke-width": 10,
+        "preset": "bubble",
+        "value": 65
+    })
+    loading
     listAll();
 });
